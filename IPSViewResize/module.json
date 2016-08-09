@@ -1,0 +1,14 @@
+{
+	"id": "{67E0285A-B72C-446D-BF1A-8EF56EC9D7B9}",
+	"name": "IPSViewResize",
+	"type": 3,
+	"vendor": "IPSStudio",
+	"aliases": 
+	[
+		"IPSView Resize"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "IPSView"
+}

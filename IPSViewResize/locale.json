@@ -1,0 +1,13 @@
+{
+	"translations": {
+		"de": { 
+			"Resize":      "Views Synchronisieren",
+			"Master View": "Orginal View",
+			"Child View":  "Ziel View",
+			"Ratio X":     "Skalierung X",
+			"Ratio Y":     "Skalierung Y",
+			"AutoSync":    "Automatische Synchronisierung der Views",
+			"Seconds":     "Sekunden"
+		}
+	}
+}

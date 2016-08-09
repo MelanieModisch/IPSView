@@ -1,0 +1,14 @@
+{ 
+	"elements": [ 
+		{ "type": "SelectMedia",   "name": "MasterView", "caption": "Master View" }, 
+		{ "type": "SelectMedia",   "name": "ChildView",  "caption": "Child View" }, 
+        { "type": "NumberSpinner", "name": "RatioX",     "caption": "Ratio X", "digits": 3},
+        { "type": "NumberSpinner", "name": "RatioY",     "caption": "Ratio Y", "digits": 3},
+        { "type": "Label",                               "label":   "---------------------------------" },
+		{ "type": "CheckBox",      "name": "AutoSync",   "caption": "AutoSync" },
+		{ "type": "IntervalBox",   "name": "Interval",   "caption": "Seconds" }
+	], 
+	"actions": [ 
+		{ "type": "Button", "label": "Resize", "onClick": "IPSView_Resize($id);" }
+	] 
+}
