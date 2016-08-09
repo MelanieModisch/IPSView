@@ -1,0 +1,14 @@
+{
+	"id": "{97F5AFD2-DAFB-436D-9C8F-F6672AA96F73}",
+	"name": "IPSViewBackup",
+	"type": 3,
+	"vendor": "IPSStudio",
+	"aliases": 
+	[
+		"IPSViewBackup"
+	],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "IPSView"
+}

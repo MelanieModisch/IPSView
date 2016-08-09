@@ -1,0 +1,12 @@
+{
+	"translations": {
+		"de": { 
+		    "View":             "View",
+		    "Directory":        "Backup Verzeichnis",      
+			"Automatic Backup": "Automatisches Backup erstellen",
+			"Minutes":          "Minuten",
+			"Automatic Purge":  "Automatisches Purge",
+			"Purge Days":       "Anzahl Tage"
+		}
+	}
+}

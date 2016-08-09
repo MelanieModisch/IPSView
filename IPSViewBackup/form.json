@@ -1,0 +1,15 @@
+{ 
+	"elements": [ 
+		{ "type": "SelectMedia",       "name": "View",       "caption": "View" }, 
+		{ "type": "ValidationTextBox", "name": "Directory",  "caption": "Directory" },
+        { "type": "Label",                                   "label":   "---------------------------------" },
+		{ "type": "CheckBox",          "name": "AutoBackup", "caption": "Automatic Backup" },
+		{ "type": "IntervalBox",       "name": "Interval",   "caption": "Minutes" },
+        { "type": "Label",                                   "label":   "---------------------------------" },
+		{ "type": "CheckBox",          "name": "AutoPurge",  "caption": "Automatic Purge" },
+        { "type": "NumberSpinner",     "name": "PurgeDays",  "caption": "Purge Days", "digits": 0}
+	], 
+	"actions": [ 
+		{ "type": "Button", "label": "Backup", "onClick": "IPSView_Backup($id);" }
+	] 
+}
