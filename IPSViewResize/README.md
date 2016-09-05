@@ -35,12 +35,17 @@ __Konfigurationsseite__:
 
 Name                    | Beschreibung
 ----------------------- | ---------------------------------
-Master View             | Media Objekt der Master View
-Child View              | Media Objekt der Child View
-Ratio X                 | Verhältnis in X Richtung für die Änderung der Skalierung 
-Ratio Y                 | Verhältnis in Y Richtung für die Änderung der Skalierung 
-AutoSync                | Änderungen der Master View überwachen und automatische Synchronisierung 
+Orignal View            | Media Objekt der Master View
+Ziel View               | Media Objekt der Child View
+Skalierung X            | Verhältnis in X Richtung für die Änderung der Skalierung 
+Skalierung Y            | Verhältnis in Y Richtung für die Änderung der Skalierung 
+Autom Synchronisierung  | Änderungen der Master View überwachen und automatische Synchronisierung 
 Interval                | Zeitinterval für die Überwachung der Master View
+
+__Testseite__:
+
+Name                    | Beschreibung
+----------------------- | ---------------------------------
 Button "Resize"         | Master View auf Child View synchronisieren
 
 ### 5. Statusvariablen und Profile
@@ -49,9 +54,7 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 ##### Statusvariablen
 
-Name         | Typ       | Beschreibung
------------- | --------- | ----------------
-LastSync     | Integer   | Datum und Uhrzeit der letzten Synchronisierung
+Es werden keine Statusvariablen angelegt
 
 ##### Profile:
 

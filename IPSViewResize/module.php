@@ -34,17 +34,30 @@ class IPSViewResize extends IPSViewBase
 	{
 		parent::ApplyChanges();
 		
-		if ($this->IsInstancePropertiesValid()) {
-			if ($this->ReadPropertyBoolean("AutoSync")) {
-				$this->SetTimerInterval("CheckMasterTimer", $this->ReadPropertyInteger("Interval")*1000);
-			} else {
-				$this->SetTimerInterval("CheckMasterTimer", 0);
-			}
+		$masterViewID     = $this->ReadPropertyInteger('MasterView');
+		$childViewID      = $this->ReadPropertyInteger('ChildView');
+		$autoSync         = $this->ReadPropertyInteger('AutoSync');
+		$ratioX           = $this->ReadPropertyFloat('RatioX');
+		$ratioY           = $this->ReadPropertyFloat('RatioY');
 		
+		if (!IPS_MediaExists($masterViewID)) {
+			$this->SetStatus(201); //No MasterView
+		} else if (!IPS_MediaExists($childViewID)) {
+			$this->SetStatus(202); //No TargetView
+		} else if ($ratioX <= 0 || $ratioY <= 0) {
+			$this->SetStatus(203); //Invalid Ratio
+		} else if (!$autoSync) {
+			$this->SetStatus(104); //Instanz ist inaktiv
+		} else {
 			$this->SetStatus(102); //Instanz ist aktiv
+		}
+		
+		$instance = IPS_GetInstance($this->InstanceID);
+		$status   = $instance['InstanceStatus'];
+		if ($status==102 && $autoSync) {
+			$this->SetTimerInterval("CheckMasterTimer", $this->ReadPropertyInteger("Interval")*60*1000);
 		} else {
 			$this->SetTimerInterval("CheckMasterTimer", 0);
-			$this->SetStatus(104); //Instanz ist inaktiv
 		}
 	}
 	
@@ -121,12 +134,10 @@ class IPSViewResize extends IPSViewBase
 	// -------------------------------------------------------------------------
 	private function IsInstancePropertiesValid()
 	{		
-		$masterViewID     = $this->ReadPropertyInteger('MasterView');
-		$childViewID      = $this->ReadPropertyInteger('ChildView');
-		$ratioX           = $this->ReadPropertyFloat('RatioX');
-		$ratioY           = $this->ReadPropertyFloat('RatioY');
-		
-		return IPS_MediaExists($masterViewID) && IPS_MediaExists($childViewID) && $ratioX > 0 && $ratioY > 0;
+		$instance = IPS_GetInstance($this->InstanceID);
+		$status   = $instance['InstanceStatus'];
+
+		return ($status == 102 || $status == 104);
 	}
 	
 	// -------------------------------------------------------------------------

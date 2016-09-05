@@ -1,15 +1,27 @@
 { 
 	"elements": [ 
-		{ "type": "SelectMedia",       "name": "View",       "caption": "View" }, 
-		{ "type": "ValidationTextBox", "name": "Directory",  "caption": "Directory" },
-        { "type": "Label",                                   "label":   "---------------------------------" },
-		{ "type": "CheckBox",          "name": "AutoBackup", "caption": "Automatic Backup" },
-		{ "type": "IntervalBox",       "name": "Interval",   "caption": "Minutes" },
-        { "type": "Label",                                   "label":   "---------------------------------" },
-		{ "type": "CheckBox",          "name": "AutoPurge",  "caption": "Automatic Purge" },
-        { "type": "NumberSpinner",     "name": "PurgeDays",  "caption": "Purge Days", "digits": 0}
+		{ "type": "SelectMedia",       "name": "View",            "caption": "View" }, 
+		{ "type": "ValidationTextBox", "name": "Directory",       "caption": "Directory" },
+        { "type": "Label",                                        "label":   "---------------------------------" },
+		{ "type": "CheckBox",          "name": "AutoBackup",      "caption": "Automatic Backup" },
+		{ "type": "IntervalBox",       "name": "Interval",        "caption": "Minutes" },
+        { "type": "Label",                                        "label":   "---------------------------------" },
+		{ "type": "CheckBox",          "name": "AutoPurge",       "caption": "Automatic Purge" },
+        { "type": "NumberSpinner",     "name": "PurgeDays",       "caption": "Purge Days", "digits": 0}
 	], 
 	"actions": [ 
-		{ "type": "Button", "label": "Backup", "onClick": "IPSView_Backup($id);" }
-	] 
-}
+		{ "type": "Button",            "label": "Backup Now",     "onClick": "IPSView_Backup($id);" },
+        { "type": "Label",                                        "label":   "---------------------------------" },
+        { "type": "Label",                                        "label":   "Restore View" },
+		{ "type": "ValidationTextBox", "name":  "FileName",       "caption": "FileName" },
+        { "type": "Label",                                        "label":   "or" },
+        { "type": "ValidationTextBox", "name":  "FileIdxBack",    "caption": "FileIdxBack", "digits": 0 },
+		{ "type": "Button",            "label": "Restore View",   "onClick": " if (trim($FileName) != '') { IPSView_RestoreByFileName($id, $FileName); } else { IPSView_RestoreByFileIdx($id, $FileIdxBack);}" }
+	],
+   "status": [
+        { "code": 102, "icon": "active",   "caption": "Backup is active" },
+        { "code": 104, "icon": "inactive", "caption": "Backup is inactive" },
+        { "code": 201, "icon": "error",    "caption": "No Directory specified" },
+        { "code": 202, "icon": "error",    "caption": "Specified Directory not found" },
+        { "code": 203, "icon": "error",    "caption": "No View specified for Backup" }
+    ]}

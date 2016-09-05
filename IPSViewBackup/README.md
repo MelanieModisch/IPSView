@@ -36,12 +36,20 @@ __Konfigurationsseite__:
 Name                    | Beschreibung
 ----------------------- | ---------------------------------
 View                    | Media Objekt der View die gesichert werden soll
-Directory               | Verzeichnis in das die Backups abgelegt werden (Verzeichnis muss existieren). Angabe eines Verzeichnisnames relativ zum IP-Symcon Root Verzeichnis ist möglich.
-AutoBackup              | Änderungen der View überwachen und automatisches Backup 
+Backup Verzeichnis      | Verzeichnis in das die Backups abgelegt werden (Verzeichnis muss existieren). Angabe eines Verzeichnisnames relativ zum IP-Symcon Root Verzeichnis ist möglich.
+Autom. Backup erstellen | Änderungen der View überwachen und automatisches Backup 
 Interval                | Zeitinterval für die Überwachung der Master View
-AutoPurge               | Ältere Backups automatisch löschen
-PurgeDays               | Anzahl der Tage nach denen ein Backup wieder gelöscht werden kann.
-Button "Backup"         | Backup der View erstellen
+Automatisches Purge     | Ältere Backups automatisch löschen
+Anzahl Tage             | Anzahl der Tage nach denen ein Backup wieder gelöscht werden kann.
+
+__Testsseite__:
+
+Name                    | Beschreibung
+----------------------- | ---------------------------------
+Backup jetzt erstellen  | Backup der View erstellen
+Filename                | Filename zum wiederherstellen der View
+Anzahl Dateien zurück   | Anzahl der Dateien zurück zum wiederherstellen der View
+View wiederherstellen   | View aus Backup wiederherstellen
 
 ### 5. Statusvariablen und Profile
 
@@ -49,9 +57,7 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 ##### Statusvariablen
 
-Name         | Typ       | Beschreibung
------------- | --------- | ----------------
-LastBackup   | Integer   | Datum und Uhrzeit des letzten Backups
+Es werden keine Statusvariablen angelegt
 
 ##### Profile:
 
@@ -69,9 +75,15 @@ Die Funktion liefert keinerlei Rückgabewert.
 Beispiel:  
 `IPSView_Backup(12345);
 
-`boolean IPSView_Restore(integer $InstanzID, string $date, string $time);`  
-View aus einem Backup wiederherstellen.  
+`boolean IPSView_RestoreByFileName(integer $InstanzID, string $file);`  
+View aus einer Backupdatei wiederherstellen. $file spezifiziert dabei eine Backupdatei im Backupverzeichnis
 Die Funktion liefert keinerlei Rückgabewert.  
 Beispiel:  
-`IPSView_Restore(12345, '20160801','1600');`
+`IPSView_RestoreByFileName(12345, '39962__20160902_2239.ipsView');`
+
+`boolean IPSView_RestoreByFileIdx(integer $InstanzID, int $idx);`  
+View aus einem Backupdatei wiederherstellen. $idx spezifiziert dabei die Anzahl der Backupdateien, die zurück gegangen werden  soll (1=letztes Backup wiederherstellen, 2=vorletztes Backup wiederherstellen, ...)
+Die Funktion liefert keinerlei Rückgabewert.  
+Beispiel:  
+`IPSView_RestoreByFileIdx(12345, 2);`
 

@@ -1,13 +1,20 @@
 {
 	"translations": {
 		"de": { 
-			"Resize":      "Views Synchronisieren",
 			"Master View": "Orginal View",
 			"Child View":  "Ziel View",
 			"Ratio X":     "Skalierung X",
 			"Ratio Y":     "Skalierung Y",
 			"AutoSync":    "Automatische Synchronisierung der Views",
-			"Seconds":     "Sekunden"
+			"Seconds":     "Sekunden",
+			
+			"Resize":      "Views Synchronisieren",
+
+			"Synchronization is active":    "Synchronisierung ist aktiv",
+			"Synchronization is inactive":  "Synchronisierung ist inaktiv",
+			"No MasterView specified" :     "Keine MasterView angegeben",
+			"No ChildView specified" :      "Keine View als Ziel angebenen",
+			"Ratio has to be greater 0":    "Verhältnis muss einen Wert größer 0 haben"
 		}
 	}
 }

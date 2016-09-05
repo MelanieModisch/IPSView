@@ -1,12 +1,26 @@
 {
 	"translations": {
 		"de": { 
-		    "View":             "View",
-		    "Directory":        "Backup Verzeichnis",      
-			"Automatic Backup": "Automatisches Backup erstellen",
-			"Minutes":          "Minuten",
-			"Automatic Purge":  "Automatisches Purge",
-			"Purge Days":       "Anzahl Tage"
+		    "View":               "View",
+		    "Directory":          "Backup Verzeichnis",      
+			"Automatic Backup":   "Automatisches Backup erstellen",
+			"Minutes":            "Minuten",
+			"Automatic Purge":    "Automatisches Purge",
+			"Purge Days":         "Anzahl Tage",
+
+			"Backup Now":         "Backup jetzt erstellen",
+			"Restore View":       "Wiederherstellen einer View",
+			"FileName":           "Filename",
+			"or":                 "oder",
+			"FileIdxBack":        "Anzahl Dateien zurück",
+			"Restore View":       "View wiederherstellen",
+			
+	        "Backup is active":   "Backup ist aktiv",
+            "Backup is inactive": "Backup ist inaktiv",
+			"No Directory specified":        "Kein Verzeichnis angegeben",
+            "Specified Directory not found": "Angegebenes Verzeichnis existiert nicht",
+            "No View specified for Backup":  "Keine View für das Backup definiert"
+
 		}
 	}
 }
