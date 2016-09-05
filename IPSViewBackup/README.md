@@ -73,7 +73,7 @@ Keine spezielle Visualisierung für das WebFront vorhanden
 Backup der View erstellen.  
 Die Funktion liefert keinerlei Rückgabewert.  
 Beispiel:  
-`IPSView_Backup(12345);
+`IPSView_Backup(12345);`
 
 `boolean IPSView_RestoreByFileName(integer $InstanzID, string $file);`  
 View aus einer Backupdatei wiederherstellen. $file spezifiziert dabei eine Backupdatei im Backupverzeichnis
