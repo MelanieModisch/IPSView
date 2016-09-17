@@ -14,6 +14,7 @@
 			"or":                 "oder",
 			"FileIdxBack":        "Anzahl Dateien zurück",
 			"Restore View":       "View wiederherstellen",
+			"Show Backupfiles":   "Zeige Backupdateien",
 			
 	        "Backup is active":   "Backup ist aktiv",
             "Backup is inactive": "Backup ist inaktiv",

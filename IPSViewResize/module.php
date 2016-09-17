@@ -36,7 +36,7 @@ class IPSViewResize extends IPSViewBase
 		
 		$masterViewID     = $this->ReadPropertyInteger('MasterView');
 		$childViewID      = $this->ReadPropertyInteger('ChildView');
-		$autoSync         = $this->ReadPropertyInteger('AutoSync');
+		$autoSync         = $this->ReadPropertyBoolean('AutoSync');
 		$ratioX           = $this->ReadPropertyFloat('RatioX');
 		$ratioY           = $this->ReadPropertyFloat('RatioY');
 		

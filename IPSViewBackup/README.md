@@ -50,6 +50,7 @@ Backup jetzt erstellen  | Backup der View erstellen
 Filename                | Filename zum wiederherstellen der View
 Anzahl Dateien zurück   | Anzahl der Dateien zurück zum wiederherstellen der View
 View wiederherstellen   | View aus Backup wiederherstellen
+Zeige Backupdateien     | Anzeige einer Liste aller vorhandenen Backupdateien
 
 ### 5. Statusvariablen und Profile
 
@@ -75,15 +76,32 @@ Die Funktion liefert keinerlei Rückgabewert.
 Beispiel:  
 `IPSView_Backup(12345);`
 
+`boolean CheckViewBackup(integer $InstanzID);`  
+Überprüft ob sich die spezifizierte View seit dem letzten Backup geändert hat, sollte eine Änderung festgestellt werden, wird ein Backup der View ausgelöst.  
+Die Funktion liefert als Rückgabewert: `TRUE` wenn Änderung festgestellt wurde, `FALSE` wenn keine Änderung erkannt wurde.
+Beispiel:  
+`CheckViewBackup(12345);`
+
 `boolean IPSView_RestoreByFileName(integer $InstanzID, string $file);`  
 View aus einer Backupdatei wiederherstellen. $file spezifiziert dabei eine Backupdatei im Backupverzeichnis
-Die Funktion liefert keinerlei Rückgabewert.  
+Die Funktion liefert als Rückgabewert: `TRUE` wenn die Funktion erfolgreich aufgeführt, `FALSE` wenn die Backupdatei nicht gefunden wurde.  
 Beispiel:  
 `IPSView_RestoreByFileName(12345, '39962__20160902_2239.ipsView');`
 
 `boolean IPSView_RestoreByFileIdx(integer $InstanzID, int $idx);`  
 View aus einem Backupdatei wiederherstellen. $idx spezifiziert dabei die Anzahl der Backupdateien, die zurück gegangen werden  soll (1=letztes Backup wiederherstellen, 2=vorletztes Backup wiederherstellen, ...)
-Die Funktion liefert keinerlei Rückgabewert.  
+Die Funktion liefert als Rückgabewert: `TRUE` wenn die Funktion erfolgreich aufgeführt, `FALSE` wenn die Backupdatei nicht gefunden wurde.  
 Beispiel:  
 `IPSView_RestoreByFileIdx(12345, 2);`
 
+`boolean IPSView_GetBackupFiles(integer $InstanzID);`  
+Gibt eine Liste der vorhandenen Backupdateien zurück.  
+Die Funktion liefert als Rückgabewert: array der vorhandenen Backupdateien.  
+Beispiel:  
+`IPSView_GetBackupFiles(12345);`
+
+`boolean IPSView_PurgeBackupFiles(integer $InstanzID);`  
+Purge der vorhanden Backupdateien ausführen.  
+Die Funktion liefert keinerlei Rückgabewert.  
+Beispiel:  
+`IPSView_PurgeBackupFiles(12345);`

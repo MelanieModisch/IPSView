@@ -1,22 +1,23 @@
 { 
 	"elements": [ 
-		{ "type": "SelectMedia",       "name": "View",            "caption": "View" }, 
-		{ "type": "ValidationTextBox", "name": "Directory",       "caption": "Directory" },
-        { "type": "Label",                                        "label":   "---------------------------------" },
-		{ "type": "CheckBox",          "name": "AutoBackup",      "caption": "Automatic Backup" },
-		{ "type": "IntervalBox",       "name": "Interval",        "caption": "Minutes" },
-        { "type": "Label",                                        "label":   "---------------------------------" },
-		{ "type": "CheckBox",          "name": "AutoPurge",       "caption": "Automatic Purge" },
-        { "type": "NumberSpinner",     "name": "PurgeDays",       "caption": "Purge Days", "digits": 0}
+		{ "type": "SelectMedia",       "name": "View",              "caption": "View" }, 
+		{ "type": "ValidationTextBox", "name": "Directory",         "caption": "Directory" },
+        { "type": "Label",                                          "label":   "---------------------------------" },
+		{ "type": "CheckBox",          "name": "AutoBackup",        "caption": "Automatic Backup" },
+		{ "type": "IntervalBox",       "name": "Interval",          "caption": "Minutes" },
+        { "type": "Label",                                          "label":   "---------------------------------" },
+		{ "type": "CheckBox",          "name": "AutoPurge",         "caption": "Automatic Purge" },
+        { "type": "NumberSpinner",     "name": "PurgeDays",         "caption": "Purge Days", "digits": 0}
 	], 
 	"actions": [ 
-		{ "type": "Button",            "label": "Backup Now",     "onClick": "IPSView_Backup($id);" },
-        { "type": "Label",                                        "label":   "---------------------------------" },
-        { "type": "Label",                                        "label":   "Restore View" },
-		{ "type": "ValidationTextBox", "name":  "FileName",       "caption": "FileName" },
-        { "type": "Label",                                        "label":   "or" },
-        { "type": "ValidationTextBox", "name":  "FileIdxBack",    "caption": "FileIdxBack", "digits": 0 },
-		{ "type": "Button",            "label": "Restore View",   "onClick": " if (trim($FileName) != '') { IPSView_RestoreByFileName($id, $FileName); } else { IPSView_RestoreByFileIdx($id, $FileIdxBack);}" }
+		{ "type": "Button",            "label": "Backup Now",       "onClick": "IPSView_Backup($id);" },
+        { "type": "Label",                                          "label":   "---------------------------------" },
+        { "type": "Label",                                          "label":   "Restore View" },
+		{ "type": "ValidationTextBox", "name":  "FileName",         "caption": "FileName" },
+        { "type": "Label",                                          "label":   "or" },
+        { "type": "ValidationTextBox", "name":  "FileIdxBack",      "caption": "FileIdxBack", "digits": 0 },
+		{ "type": "Button",            "label": "Restore View",     "onClick": "if (trim($FileName) != '') { $result=IPSView_RestoreByFileName($id, $FileName); } else { $result=IPSView_RestoreByFileIdx($id, $FileIdxBack);} if ($result) { echo 'Restored !';} else { echo 'Backup NOT found: '.PHP_EOL; }" },
+		{ "type": "Button",            "label": "Show Backupfiles", "onClick": "$files=IPSView_GetBackupFiles($id); echo 'Files: '.PHP_EOL; foreach ($files as $num=>$file) { echo $num.'='.$file.PHP_EOL;}" }
 	],
    "status": [
         { "code": 102, "icon": "active",   "caption": "Backup is active" },

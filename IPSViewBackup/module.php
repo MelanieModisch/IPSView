@@ -35,7 +35,7 @@ class IPSViewBackup extends IPSViewBase
 		parent::ApplyChanges();
 		
 		$viewID        = $this->ReadPropertyInteger('View');
-		$autoBackup    = $this->ReadPropertyInteger('AutoBackup');
+		$autoBackup    = $this->ReadPropertyBoolean('AutoBackup');
 		$directory     = $this->GetBackupDirectory();
 		
 		if (!IPS_MediaExists($viewID)) {
@@ -79,8 +79,10 @@ class IPSViewBackup extends IPSViewBase
 	{
 		$this->SendDebug("CheckView", "Check View ...", 0);
 		
+		$result = false;
 		if ($this->IsInstancePropertiesValid()) {
 			$viewID        = $this->ReadPropertyInteger('View');
+			$autoPurge     = $this->ReadPropertyBoolean('AutoPurge');
 			$directory     = $this->GetBackupDirectory();
 			$media         = IPS_GetMedia($viewID);
 			$mediaFile     = IPS_GetKernelDir().$media['MediaFile'];
@@ -90,45 +92,32 @@ class IPSViewBackup extends IPSViewBase
 			if ($mediaContent != $backupContent) {
 				$this->SendDebug("Backup", "Found View Modification for View with ID=$viewID", 0);
 				$this->Backup();
-				$this->PurgeLogFiles($directory, $viewID, $days);
+				if ($autoPurge) {
+					$this->PurgeBackupFiles();
+				}
+				$result = true;
 			}
 			
 			$this->SetTimerInterval("CheckViewBackupTimer", $this->ReadPropertyInteger("Interval")*60*1000);
-		}		
+		}
+		return $result;		
 	}
 
 	// -------------------------------------------------------------------------
-	private function Restore($file)
+	public function PurgeBackupFiles()
 	{	
-		if (!$this->IsInstancePropertiesValid()) {
-			echo "Backup Settings not valid!";
-			return;
-		}			
-
-		if ($file == '') {
-			echo "No Backup found!";
-			return;
-		}
-	
 		$viewID        = $this->ReadPropertyInteger('View');
+		$days          = $this->ReadPropertyInteger('PurgeDays');
 		$directory     = $this->GetBackupDirectory();
-		$backupFile    = $directory.$file;
-		$mediaFile     = IPS_GetKernelDir().'media/'.$viewID.'.ipsView';
-	
-		if (!file_exists($backupFile)) {
-			echo "Backupfile NOT fould!";
-			return;
-		}
-
-		copy ($backupFile, $mediaFile);
-		echo 'Restored '.$backupFile;
+		
+		$this->PurgeBackupFilesByDays($directory, $viewID, $days);
 	}
 
 	
 	// -------------------------------------------------------------------------
 	public function RestoreByFileName($file)
 	{	
-		$this->Restore($file);
+		return $this->Restore($file);
 	}
 
 	// -------------------------------------------------------------------------
@@ -138,12 +127,74 @@ class IPSViewBackup extends IPSViewBase
 		$directory     = $this->GetBackupDirectory();
 		$file          = $this->GetBackupFileIdx($directory, $viewID, $idx);
 
-		$this->Restore($file);
+		return $this->Restore($file);
+	}
+
+	// -------------------------------------------------------------------------
+	public function GetBackupFiles()
+	{	
+		$viewID        = $this->ReadPropertyInteger('View');
+		$directory     = $this->GetBackupDirectory();
+		if (($handle=opendir($directory))===false) {
+			die ('Error Opening Directory '.$directory);
+		}
+
+		$files = array();
+		while (($file = readdir($handle))!==false) {
+			$fileID        = substr($file, 0, 5);
+			if ($fileID==$viewID) {
+				$files[] = $file;
+			}
+		}
+		closedir($handle);
+
+		$count  = 0;
+		$result = array();
+		$files  = array_reverse($files);
+		$this->SendDebug("ShowFiles",  "Files: ", 0);
+		foreach($files as $file) {
+			$count++;
+			$result[$count] = $file;
+			$this->SendDebug("ShowFiles",  "$count = $file", 0);
+		}
+		return $result;
 	}
 
 	// ----------------------------------------------------------------------------------------------------
 	// PRIVATE Functions
 	// ----------------------------------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	private function Restore($file)
+	{	
+		if (!$this->IsInstancePropertiesValid()) {
+			$this->SendDebug("Restore", "Backup Settings not valid!", 0);
+			return false;
+		}			
+
+		if ($file == '') {
+			$this->SendDebug("Restore", "No Backup found!", 0);
+			return false;
+		}
+	
+		$viewID        = $this->ReadPropertyInteger('View');
+		$directory     = $this->GetBackupDirectory();
+		$backupFile    = $directory.$file;
+		$mediaFile     = IPS_GetKernelDir().'media/'.$viewID.'.ipsView';
+	
+		if (!file_exists($backupFile)) {
+			$this->SendDebug("Restore", "Backupfile NOT fould!", 0);
+			return false;
+		}
+
+		if (copy ($backupFile, $mediaFile)) {
+			$this->SendDebug("Restore",  "Restored $backupFile", 0);
+			return true;
+		} else {
+			$this->SendDebug("Restore",  "Restored $backupFile failed!", 0);
+			return false;
+		}	
+	}
 
 	// -------------------------------------------------------------------------
 	private function GetBackupDirectory()
@@ -219,9 +270,9 @@ class IPSViewBackup extends IPSViewBase
 	}
 
 	// -------------------------------------------------------------------------
-	private function PurgeBackupFiles($directory, $id, $days) {
+	private function PurgeBackupFilesByDays($directory, $id, $days) {
 		$referenceDate=Date('Ymd', strtotime("-".$days." days"));
-		$this->SendDebug("Purge", "Purge IPSView Backupfile older $referenceDate", 0);
+		$this->SendDebug("Purge", "Purge IPSView Backupfiles older Date=$referenceDate", 0);
 
 		if (($handle=opendir($directory))===false) {
 			die ('Error Opening Directory '.$directory);
