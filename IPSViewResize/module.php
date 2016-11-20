@@ -55,7 +55,7 @@ class IPSViewResize extends IPSViewBase
 		$instance = IPS_GetInstance($this->InstanceID);
 		$status   = $instance['InstanceStatus'];
 		if ($status==102 && $autoSync) {
-			$this->SetTimerInterval("CheckMasterTimer", $this->ReadPropertyInteger("Interval")*60*1000);
+			$this->SetTimerInterval("CheckMasterTimer", $this->ReadPropertyInteger("Interval")*1000);
 		} else {
 			$this->SetTimerInterval("CheckMasterTimer", 0);
 		}
@@ -214,6 +214,9 @@ class IPSViewResize extends IPSViewBase
 				$control['LocationY'] = round($control['LocationY'] * $factorY);
 				if (array_key_exists('Font', $control) && array_key_exists('Size', $control['Font'])) {
 				   $control['Font']['Size'] = round($control['Font']['Size'] * $factor);
+				}
+				if (array_key_exists('Font', $control) && array_key_exists('DesignerSize', $control['Font'])) {
+				   $control['Font']['DesignerSize'] = round($control['Font']['DesignerSize'] * $factor);
 				}
 				if (array_key_exists('CR1', $control)) $control['CR1'] = round($control['CR1'] * $factor);
 				if (array_key_exists('CR2', $control)) $control['CR2'] = round($control['CR2'] * $factor);
