@@ -229,6 +229,7 @@ class IPSViewResize extends IPSViewBase
 			$page['PopupHeight'] = round($page['PopupHeight'] * $factorY);
 			$pages[] = $page;
 		}
+		if (array_key_exists('DefaultFontSize', $jsonObj)) $jsonObj['DefaultFontSize'] = round($jsonObj['DefaultFontSize'] * $factor);
 		$jsonObj['Pages'] = $pages;
 
 		return $jsonObj;
