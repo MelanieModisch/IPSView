@@ -64,6 +64,7 @@ class IPSViewResize extends IPSViewBase
 	// -------------------------------------------------------------------------
 	public function Resize()
 	{
+		$this->SendDebug("Resize", "=====================================================================", 0);
 		$this->SendDebug("Resize", "Execute Resize of  MasterView:", 0);
 		$this->SendDebug("Resize", "Available Memory: ".ini_get('memory_limit'), 0);
 		
@@ -80,13 +81,9 @@ class IPSViewResize extends IPSViewBase
 
 			// Build Result Object
 			$resultObj                   = $this->ResizeView ($masterObj, $childViewFactorX, $childViewFactorY);
-			$resultObj['ViewRatio12']    = $viewProperties['ViewRatio12'];
-			$resultObj['Name']           = $viewProperties['Name'];
-			$resultObj['ID']             = $childViewID;
-			$resultObj['Width']          = $viewProperties['Width'];
-			$resultObj['Height']         = $viewProperties['Height'];
-			$resultObj['Client']         = $viewProperties['Client'];
-			$resultObj['Hardware']       = $viewProperties['Hardware'];
+			foreach ($viewProperties as $propertyName=>$propertyValue) {
+				$resultObj[$propertyName]    = $propertyValue;
+			}
 
 			$this->ShowMemoryUsage('Build Result:');
 			$masterObj = null;
@@ -97,7 +94,7 @@ class IPSViewResize extends IPSViewBase
 			$this->ShowMemoryUsage('finished:');
 
 			$this->SendDebug("Resize", "=============================================================", 0);
-			$this->SendDebug("Resize", "Successfully finished synchronizatio", 0);
+			$this->SendDebug("Resize", "Successfully finished synchronization", 0);
 			$this->SendDebug("Resize", "=============================================================", 0);
 		}
 	}
@@ -163,22 +160,66 @@ class IPSViewResize extends IPSViewBase
 		$viewObj = $this->GetViewObject($ID);
 		$name    = IPS_GetName($ID);
 
-		$result                   = array();
-		$result['ViewRatio12']    = $viewObj['ViewRatio12'];
-		$result['Name']           = $viewObj['Name'];
-		$result['ID']             = $viewObj['ID'];
-		$result['Width']          = $viewObj['Width'];
-		$result['Height']         = $viewObj['Height'];
-		$result['Client']         = $viewObj['Client'];
-		$result['Hardware']       = $viewObj['Hardware'];
+		$result                           = array();
+		$result['ViewRatio12']            = $viewObj['ViewRatio12'];
+		$result['Name']                   = $viewObj['Name'];
+		$result['ID']                     = $viewObj['ID'];
+		$result['Width']                  = $viewObj['Width'];
+		$result['Height']                 = $viewObj['Height'];
+		$result['Client']                 = $viewObj['Client'];
+		$result['Hardware']               = $viewObj['Hardware'];
+		$result['RemoteActiveTab']        = $viewObj['RemoteActiveTab'];
+		$result['RemoteActivePopup']      = $viewObj['RemoteActivePopup'];
+		$result['RemoteInlineMain']       = $viewObj['RemoteInlineMain'];
+		$result['RemoteInlineHeader']     = $viewObj['RemoteInlineHeader'];
+		$result['RemoteInlineMenu']       = $viewObj['RemoteInlineMenu'];
+		$result['RemoteInlineNavigation'] = $viewObj['RemoteInlineNavigation'];
+		$result['RemoteInlineDetail']     = $viewObj['RemoteInlineDetail'];
+		$result['RemoteInlineContent']    = $viewObj['RemoteInlineContent'];
+		$result['RemoteInlineInfo']       = $viewObj['RemoteInlineInfo'];
+		$result['RemoteInlinePopup1']     = $viewObj['RemoteInlinePopup1'];
+		$result['RemoteInlinePopup2']     = $viewObj['RemoteInlinePopup2'];
+		$result['RemoteInlinePopup3']     = $viewObj['RemoteInlinePopup3'];
+		$result['ServerActiveTab']        = $viewObj['ServerActiveTab'];
+		$result['ServerActivePopup']      = $viewObj['ServerActivePopup'];
+		$result['ServerInlineMain']       = $viewObj['ServerInlineMain'];
+		$result['ServerInlineHeader']     = $viewObj['ServerInlineHeader'];
+		$result['ServerInlineMenu']       = $viewObj['ServerInlineMenu'];
+		$result['ServerInlineNavigation'] = $viewObj['ServerInlineNavigation'];
+		$result['ServerInlineDetail']     = $viewObj['ServerInlineDetail'];
+		$result['ServerInlineContent']    = $viewObj['ServerInlineContent'];
+		$result['ServerInlineInfo']       = $viewObj['ServerInlineInfo'];
+		$result['ServerInlinePopup1']     = $viewObj['ServerInlinePopup1'];
+		$result['ServerInlinePopup2']     = $viewObj['ServerInlinePopup2'];
+		$result['ServerInlinePopup3']     = $viewObj['ServerInlinePopup3'];
+		if (array_key_exists('ClientWinMinimizeID', $viewObj))
+			$result['ClientWinMinimizeID']    = $viewObj['ClientWinMinimizeID'];
+		if (array_key_exists('ClientWinBalloonID', $viewObj))
+			$result['ClientWinBalloonID']     = $viewObj['ClientWinBalloonID'];
+		if (array_key_exists('ClientWinBalloonSec', $viewObj))
+			$result['ClientWinBalloonSec']    = $viewObj['ClientWinBalloonSec'];
+		if (array_key_exists('ClientAndKeepScreenOnID', $viewObj))
+			$result['ClientAndKeepScreenOnID']= $viewObj['ClientAndKeepScreenOnID'];
+		if (array_key_exists('ClientAndBrightnessID', $viewObj))
+			$result['ClientAndBrightnessID']  = $viewObj['ClientAndBrightnessID'];
+		if (array_key_exists('ClientAndBatteryID', $viewObj))
+			$result['ClientAndBatteryID']     = $viewObj['ClientAndBatteryID'];
+		if (array_key_exists('ClientiOSBatteryID', $viewObj))
+			$result['ClientiOSBatteryID']     = $viewObj['ClientiOSBatteryID'];
+		if (array_key_exists('FeedbackAudible', $viewObj))
+			$result['FeedbackAudible']        = $viewObj['FeedbackAudible'];
+		if (array_key_exists('FeedbackHaptic', $viewObj))
+			$result['FeedbackHaptic']         = $viewObj['FeedbackHaptic'];
+		
 		$this->ShowMemoryUsage("getViewProperties '$name'");
+		$viewObj = null;
 
 	   return $result;
 	}
 
 	// -------------------------------------------------------------------------
 	private function GetViewObject($ID) {
-	   $name = IPS_GetName($ID);
+ 	    $name = IPS_GetName($ID);
 	
 		// Read Content of View
 		$content     = IPS_GetMediaContent($ID);
