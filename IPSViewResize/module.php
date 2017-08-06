@@ -168,6 +168,7 @@ class IPSViewResize extends IPSViewBase
 		$result['Height']                 = $viewObj['Height'];
 		$result['Client']                 = $viewObj['Client'];
 		$result['Hardware']               = $viewObj['Hardware'];
+		$result['FullScreen']             = $viewObj['FullScreen'];
 		$result['RemoteActiveTab']        = $viewObj['RemoteActiveTab'];
 		$result['RemoteActivePopup']      = $viewObj['RemoteActivePopup'];
 		$result['RemoteInlineMain']       = $viewObj['RemoteInlineMain'];
