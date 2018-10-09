@@ -44,7 +44,7 @@ class IPSViewResize extends IPSViewBase
 			$this->SetStatus(201); //No MasterView
 		} else if (!IPS_MediaExists($childViewID)) {
 			$this->SetStatus(202); //No TargetView
-		} else if ($ratioX <= 0 || $ratioY <= 0) {
+		} else if ($ratioX == 0 || $ratioY == 0) {
 			$this->SetStatus(203); //Invalid Ratio
 		} else if (!$autoSync) {
 			$this->SetStatus(104); //Instanz ist inaktiv
